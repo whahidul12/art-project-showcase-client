@@ -1,13 +1,5 @@
-// import React from "react";
-
-// const Home = () => {
-//   return <div className="bg-amber-300 dark:bg-blue-700">home</div>;
-// };
-
-// export default Home;
-
 import { useState, useEffect } from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Link } from "react-router";
 import { Typewriter } from "react-simple-typewriter";
 import ArtworkCard from "../../Components/ArtworkCard/ArtworkCard";
