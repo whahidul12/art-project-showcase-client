@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Link, NavLink } from "react-router";
+import { motion } from "motion/react";
 import logo from "../..//assets/images/logo.png";
 import { ThemeContext } from "../../Context/ThemeProvider";
 
@@ -29,8 +30,10 @@ const Navbar = () => {
   );
 
   return (
-    <div
-      className={`navbar bg-primary dark:bg-primary-dark shadow-sm ${isDark ? "dark" : ""}`}
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      className="navbar bg-base-100/80 sticky top-0 z-50 px-4 shadow-lg backdrop-blur-md lg:px-8"
     >
       <div className="navbar-start">
         <div className="dropdown">
@@ -88,7 +91,7 @@ const Navbar = () => {
         </button>
         <a className="btn">Button</a>
       </div>
-    </div>
+    </motion.nav>
   );
 };
 

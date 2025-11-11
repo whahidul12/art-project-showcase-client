@@ -32,6 +32,11 @@ const Routes = createBrowserRouter([
         path: "/my-gallery",
         Component: MyGallery,
       },
+      {
+        path: "/artwork/:id",
+
+        Component: MyGallery,
+      },
     ],
   },
 ]);
