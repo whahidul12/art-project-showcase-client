@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router";
 import { motion } from "motion/react";
 import logo from "../..//assets/images/logo.png";
 import { ThemeContext } from "../../Context/ThemeProvider";
+import "./Navbar.css";
 
 const Navbar = () => {
   const { isDark, setDark } = useContext(ThemeContext);
@@ -12,19 +13,44 @@ const Navbar = () => {
   const links = (
     <>
       <li>
-        <NavLink to={"/"}>Home</NavLink>
+        <NavLink
+          to={"/"}
+          className="text-primary-dark dark:text-primary-light text-lg font-semibold"
+        >
+          Home
+        </NavLink>
       </li>
       <li>
-        <NavLink to={"/explore-artworks"}>ExploreArtworks</NavLink>
+        <NavLink
+          to={"/explore-artworks"}
+          className="text-primary-dark dark:text-primary-light text-lg font-semibold"
+        >
+          ExploreArtworks
+        </NavLink>
       </li>
       <li>
-        <NavLink to={"/add-artwork"}>AddArtwork</NavLink>
+        <NavLink
+          to={"/add-artwork"}
+          className="text-primary-dark dark:text-primary-light text-lg font-semibold"
+        >
+          AddArtwork
+        </NavLink>
       </li>
       <li>
-        <NavLink to={"/my-favorites"}>MyFavorites</NavLink>
+        <NavLink
+          to={"/my-favorites"}
+          className="text-primary-dark dark:text-primary-light text-lg font-semibold"
+        >
+          MyFavorites
+        </NavLink>
       </li>
       <li>
-        <NavLink to={"/my-gallery"}>MyGallery</NavLink>
+        <NavLink
+          to={"/my-gallery"}
+          className="text-primary-dark dark:text-primary-light text-lg font-semibold"
+        >
+          MyGallery
+        </NavLink>
       </li>
     </>
   );
@@ -33,7 +59,7 @@ const Navbar = () => {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="navbar bg-base-100/80 sticky top-0 z-50 px-4 shadow-lg backdrop-blur-md lg:px-8"
+      className="navbar bg-primary-light/50 dark:bg-primary-dark/50 sticky top-0 z-50 px-4 shadow-lg backdrop-blur-xs lg:px-8"
     >
       <div className="navbar-start">
         <div className="dropdown">
@@ -61,7 +87,10 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        <Link to={"/"} className="btn btn-ghost text-xl">
+        <Link
+          to={"/"}
+          className="text-primary-dark dark:text-primary-light flex items-center gap-2 text-2xl font-extrabold"
+        >
           <img src={logo} alt="logo" className="w-10" />
           ArtFolio
         </Link>

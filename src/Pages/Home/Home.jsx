@@ -116,7 +116,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
+    <div className="bg-primary-light dark:bg-primary-dark">
       {/* Hero Banner/Slider */}
       <div className="relative h-[600px] overflow-hidden">
         {slides.map((slide, index) => (
@@ -191,7 +191,7 @@ const Home = () => {
           viewport={{ once: true }}
           className="mb-12 text-center"
         >
-          <h2 className="mb-4 text-4xl font-bold md:text-5xl">
+          <h2 className="text-primary-dark dark:text-primary-light mb-4 text-4xl font-bold md:text-5xl">
             <Typewriter
               words={["Featured Artworks", "Recent Creations", "Trending Art"]}
               loop={0}
@@ -202,7 +202,7 @@ const Home = () => {
               delaySpeed={3000}
             />
           </h2>
-          <p className="text-base-content/70 text-xl">
+          <p className="text-primary-dark dark:text-primary-light text-xl">
             Discover the latest masterpieces from our talented community
           </p>
         </motion.div>
@@ -234,7 +234,7 @@ const Home = () => {
       </section>
 
       {/* Top Artists Section */}
-      <section className="bg-base-200 py-20">
+      <section className="py-20">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -242,10 +242,10 @@ const Home = () => {
             viewport={{ once: true }}
             className="mb-12 text-center"
           >
-            <h2 className="mb-4 text-4xl font-bold md:text-5xl">
+            <h2 className="text-primary-dark dark:text-primary-light mb-4 text-4xl font-bold md:text-5xl">
               Top Artists of the Week
             </h2>
-            <p className="text-base-content/70 text-xl">
+            <p className="text-primary-dark dark:text-primary-light text-xl">
               Meet the creative minds behind stunning artworks
             </p>
           </motion.div>
@@ -260,7 +260,7 @@ const Home = () => {
                 transition={{ delay: index * 0.2 }}
                 className="card bg-base-100 shadow-xl transition-all hover:shadow-2xl"
               >
-                <div className="card-body items-center text-center">
+                <div className="card-body bg-card-light dark:bg-card-dark items-center text-center">
                   <div className="avatar mb-4">
                     <div className="ring-primary ring-offset-base-100 w-24 rounded-full ring ring-offset-2">
                       <img

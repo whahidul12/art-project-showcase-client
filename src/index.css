@@ -4,6 +4,9 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-    --color-primary: blue;
-    --color-primary-dark: green;
+    --color-primary-light: #F7F6EC;
+    --color-primary-dark: #13130D;
+    --color-crime: #EBE9CF;
+    --color-card-light: #DFDECF;
+    --color-card-dark: #262626;
 }
