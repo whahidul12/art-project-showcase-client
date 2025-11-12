@@ -1,109 +1,95 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { motion } from "motion/react";
-// import toast from "react-hot-toast";
 import { AuthContext } from "../../Context/AuthProvider";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    photoURL: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
+  const [errorMsg, setErrorMsg] = useState("");
   const { createUser, setUser, updateUser, SingUpWithGoogleFromProvider } =
     useContext(AuthContext);
   const navigate = useNavigate();
 
-  const validatePassword = (password) => {
-    const hasUpperCase = /[A-Z]/.test(password);
-    const hasLowerCase = /[a-z]/.test(password);
-    const hasMinLength = password.length >= 6;
-
-    if (!hasUpperCase) {
-      return "Password must contain at least one uppercase letter";
-    }
-    if (!hasLowerCase) {
-      return "Password must contain at least one lowercase letter";
-    }
-    if (!hasMinLength) {
-      return "Password must be at least 6 characters long";
-    }
-    return null;
-  };
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
+    const name = e.target.name.value;
+    const photoUrl = e.target.photoURL.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
 
-    // Validation
-    if (!formData.name || !formData.email || !formData.password) {
-      //   toast.error("Please fill in all required fields");
-      return;
-    }
+    const validatePassword = (password) => {
+      const hasUpperCase = /[A-Z]/.test(password);
+      const hasLowerCase = /[a-z]/.test(password);
+      const isLongEnough = password.length >= 6;
 
-    const passwordError = validatePassword(formData.password);
-    if (passwordError) {
-      //   toast.error(passwordError);
-      return;
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      //   toast.error("Passwords do not match");
-      return;
-    }
-
-    setLoading(true);
-
-    try {
-      await createUser(
-        formData.email,
-        formData.password,
-        formData.name,
-        formData.photoURL ||
-          `https://ui-avatars.com/api/?name=${encodeURIComponent(formData.name)}&background=random`,
-      );
-      //   toast.success("Account created successfully!");
-      navigate("/");
-    } catch (error) {
-      console.error(error);
-      if (error.code === "auth/email-already-in-use") {
-        // toast.error("Email is already registered");
-      } else if (error.code === "auth/invalid-email") {
-        // toast.error("Invalid email address");
-      } else if (error.code === "auth/weak-password") {
-        // toast.error("Password is too weak");
-      } else {
-        // toast.error("Failed to create account. Please try again.");
+      if (!hasUpperCase) {
+        toast.error(
+          <div>Password must contain at least one uppercase letter</div>,
+        );
+        return "Password must contain at least one uppercase letter";
       }
-    } finally {
-      setLoading(false);
+      if (!hasLowerCase) {
+        toast.error(
+          <div>Password must contain at least one lowercase letter</div>,
+        );
+        return "Password must contain at least one lowercase letter";
+      }
+      if (!isLongEnough) {
+        toast.error(<div>Password must be at least 6 characters long</div>);
+        return "Password must be at least 6 characters long";
+      }
+      return null;
+    };
+    const passwordError = validatePassword(password);
+    if (passwordError) {
+      setErrorMsg(passwordError);
+      return;
     }
+
+    console.log(createUser);
+    createUser(email, password)
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        // console.log(user);
+        updateUser({ displayName: name, photoURL: photoUrl })
+          .then(() => {
+            // Profile updated!
+            // ...
+            setUser({ ...user, displayName: name, photoURL: photoUrl });
+          })
+          .catch((error) => {
+            // An error occurred
+            // ...
+            console.log(error);
+            setUser(user);
+          });
+
+        e.target.reset();
+        navigate(location.state ? location.state : "/");
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        // const errorMessage = error.message;
+        console.error("error Code:", errorCode);
+        // console.error("error Message:", errorMessage);
+        // ..
+      });
   };
 
-  const handleGoogleSignIn = async () => {
-    setLoading(true);
-    try {
-      await SingUpWithGoogleFromProvider();
-      //   toast.success("Registered with Google successfully!");
-      navigate("/");
-    } catch (error) {
-      console.error(error);
-      //   toast.error("Failed to register with Google");
-    } finally {
-      setLoading(false);
-    }
+  const signUpWithGoogle = (e) => {
+    e.preventDefault();
+    SingUpWithGoogleFromProvider()
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+      })
+      .catch((error) => {
+        console.log(">>>", error);
+      });
   };
 
   return (
@@ -124,7 +110,7 @@ const Register = () => {
             Create Account
           </motion.h2>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleRegister} className="space-y-4">
             <div className="form-control">
               <label className="label">
                 <span className="label-text font-medium">Name *</span>
@@ -135,8 +121,6 @@ const Register = () => {
                 name="name"
                 placeholder="Enter your name"
                 className="input input-bordered w-full"
-                value={formData.name}
-                onChange={handleChange}
                 required
               />
             </div>
@@ -151,8 +135,6 @@ const Register = () => {
                 name="email"
                 placeholder="Enter your email"
                 className="input input-bordered w-full"
-                value={formData.email}
-                onChange={handleChange}
                 required
               />
             </div>
@@ -167,8 +149,6 @@ const Register = () => {
                 name="photoURL"
                 placeholder="Enter photo URL (optional)"
                 className="input input-bordered w-full"
-                value={formData.photoURL}
-                onChange={handleChange}
               />
             </div>
 
@@ -183,10 +163,13 @@ const Register = () => {
                   name="password"
                   placeholder="Enter your password"
                   className="input input-bordered w-full pr-10"
-                  value={formData.password}
-                  onChange={handleChange}
                   required
                 />
+                {errorMsg ? (
+                  <p className="font-semibold text-red-500">{errorMsg}</p>
+                ) : (
+                  ""
+                )}
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
@@ -214,8 +197,6 @@ const Register = () => {
                 name="confirmPassword"
                 placeholder="Confirm your password"
                 className="input input-bordered w-full"
-                value={formData.confirmPassword}
-                onChange={handleChange}
                 required
               />
             </div>
@@ -224,10 +205,9 @@ const Register = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
-              className={`btn btn-primary w-full ${loading ? "loading" : ""}`}
-              disabled={loading}
+              className={`btn btn-primary w-full`}
             >
-              {loading ? "Creating Account..." : "Register"}
+              Register
             </motion.button>
           </form>
 
@@ -236,9 +216,9 @@ const Register = () => {
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            onClick={handleGoogleSignIn}
+            onClick={signUpWithGoogle}
             className="btn btn-outline w-full"
-            disabled={loading}
+            // disabled={loading}
           >
             <svg className="mr-2 h-5 w-5" viewBox="0 0 24 24">
               <path
@@ -272,6 +252,7 @@ const Register = () => {
           </p>
         </div>
       </motion.div>
+      <ToastContainer />
     </div>
   );
 };
