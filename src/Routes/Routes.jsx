@@ -9,6 +9,7 @@ import MyGallery from "../Pages/MyGallery/MyGallery";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import ArtworkDetails from "../Pages/ArtworkDetails/ArtworkDetails";
+import PrivetRoutes from "./PrivetRoutes";
 
 const Routes = createBrowserRouter([
   {
@@ -25,19 +26,35 @@ const Routes = createBrowserRouter([
       },
       {
         path: "/add-artwork",
-        Component: AddArtwork,
+        element: (
+          <PrivetRoutes>
+            <AddArtwork></AddArtwork>
+          </PrivetRoutes>
+        ),
       },
       {
         path: "/my-favorites",
-        Component: MyFavorites,
+        element: (
+          <PrivetRoutes>
+            <MyFavorites></MyFavorites>
+          </PrivetRoutes>
+        ),
       },
       {
         path: "/my-gallery",
-        Component: MyGallery,
+        element: (
+          <PrivetRoutes>
+            <MyGallery></MyGallery>
+          </PrivetRoutes>
+        ),
       },
       {
         path: "/artwork/:id",
-        Component: ArtworkDetails,
+        element: (
+          <PrivetRoutes>
+            <ArtworkDetails></ArtworkDetails>
+          </PrivetRoutes>
+        ),
       },
     ],
   },

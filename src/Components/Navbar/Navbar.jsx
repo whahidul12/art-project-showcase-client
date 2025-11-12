@@ -48,30 +48,34 @@ const Navbar = () => {
           ExploreArtworks
         </NavLink>
       </li>
-      <li>
-        <NavLink
-          to={"/add-artwork"}
-          className="text-primary-dark dark:text-primary-light text-lg font-semibold"
-        >
-          AddArtwork
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to={"/my-favorites"}
-          className="text-primary-dark dark:text-primary-light text-lg font-semibold"
-        >
-          MyFavorites
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to={"/my-gallery"}
-          className="text-primary-dark dark:text-primary-light text-lg font-semibold"
-        >
-          MyGallery
-        </NavLink>
-      </li>
+      {user && (
+        <>
+          <li>
+            <NavLink
+              to={"/add-artwork"}
+              className="text-primary-dark dark:text-primary-light text-lg font-semibold"
+            >
+              AddArtwork
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={"/my-favorites"}
+              className="text-primary-dark dark:text-primary-light text-lg font-semibold"
+            >
+              MyFavorites
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to={"/my-gallery"}
+              className="text-primary-dark dark:text-primary-light text-lg font-semibold"
+            >
+              MyGallery
+            </NavLink>
+          </li>
+        </>
+      )}
     </>
   );
 
@@ -127,9 +131,32 @@ const Navbar = () => {
           )}
         </button>
         {user ? (
-          <button className="btn" onClick={handleLogOut}>
-            Sign Out
-          </button>
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+            >
+              <div className="ring-primary ring-offset-base-100 w-10 rounded-full ring ring-offset-2">
+                <img alt={user?.displayName || "User"} src={user?.photoURL} />
+              </div>
+            </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-200 rounded-box z-1 mt-3 w-52 p-2 shadow-xl"
+            >
+              <li className="menu-title">
+                <span className="text-base font-semibold">
+                  {user.displayName || "User"}
+                </span>
+              </li>
+              <li>
+                <button onClick={handleLogOut} className="text-error">
+                  Logout
+                </button>
+              </li>
+            </ul>
+          </div>
         ) : (
           <>
             <Link to={"/auth/login"} className="btn">

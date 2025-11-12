@@ -3,24 +3,19 @@ import { motion } from "motion/react";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Context/AuthProvider";
+import useAxios from "../../Hooks/useAxios";
 
 const AddArtwork = () => {
   const { user } = useContext(AuthContext);
-  console.log(user);
+  const axiosInstance = useAxios();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const [formData, setFormData] = useState({
-    imageUrl: "",
-    title: "",
-    category: "",
-    medium: "",
-    description: "",
-    dimensions: "",
-    price: "",
-    visibility: "Public",
+  let artistUserID = null;
+  axiosInstance.get(`/users/${user?.email}`).then((response) => {
+    console.log("create a user from google:", response.data);
+    artistUserID = response.data._id;
   });
-
   const categories = [
     "Abstract",
     "Landscape",
@@ -33,17 +28,41 @@ const AddArtwork = () => {
     "Mixed Media",
   ];
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.imageUrl || !formData.title || !formData.category) {
+    const artistName = user?.displayName;
+    const artistEmail = user?.email;
+    const artistPhoto = user?.photoURL;
+    const likes = 0;
+    const createdAt = new Date().toISOString();
+    const title = e.target.title.value;
+    const imageUrl = e.target.imageUrl.value;
+    const category = e.target.category.value;
+    const medium = e.target.medium.value;
+    const description = e.target.description.value;
+    const dimensions = e.target.dimensions.value;
+    const price = e.target.price.value;
+    const visibility = e.target.visibility.value;
+
+    const newArt = {
+      artistName,
+      artistUserID,
+      artistEmail,
+      artistPhoto,
+      likes,
+      createdAt,
+      title,
+      imageUrl,
+      category,
+      medium,
+      description,
+      dimensions,
+      price,
+      visibility,
+    };
+
+    if (!imageUrl || !title || !category) {
       Swal.fire({
         position: "top-end",
         icon: "error",
@@ -58,19 +77,11 @@ const AddArtwork = () => {
 
     try {
       // This will be replaced with actual API call
-      const artworkData = {
-        ...formData,
-        artistName: user?.displayName,
-        artistEmail: user?.email,
-        artistPhoto: user?.photoURL,
-        likes: 0,
-        createdAt: new Date().toISOString(),
-      };
-
-      console.log("Artwork data to be saved:", artworkData);
-
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      axiosInstance
+        .post("/add-artwork", newArt)
+        .then((response) =>
+          console.log("create a user from google:", response.data),
+        );
 
       Swal.fire({
         position: "top-end",
@@ -129,11 +140,11 @@ const AddArtwork = () => {
                   name="imageUrl"
                   placeholder="https://example.com/image.jpg"
                   className="input input-bordered w-full"
-                  value={formData.imageUrl}
-                  onChange={handleChange}
+                  // value={formData.imageUrl}
+                  // onChange={handleChange}
                   required
                 />
-                {formData.imageUrl && (
+                {/* {imageUrl && (
                   <div className="mt-4">
                     <img
                       src={formData.imageUrl}
@@ -144,7 +155,7 @@ const AddArtwork = () => {
                       }}
                     />
                   </div>
-                )}
+                )} */}
               </div>
 
               {/* Title */}
@@ -158,8 +169,8 @@ const AddArtwork = () => {
                   name="title"
                   placeholder="Enter artwork title"
                   className="input input-bordered w-full"
-                  value={formData.title}
-                  onChange={handleChange}
+                  // value={formData.title}
+                  // onChange={handleChange}
                   required
                 />
               </div>
@@ -173,8 +184,8 @@ const AddArtwork = () => {
                   whileFocus={{ scale: 1.01 }}
                   name="category"
                   className="select select-bordered w-full"
-                  value={formData.category}
-                  onChange={handleChange}
+                  // value={formData.category}
+                  // onChange={handleChange}
                   required
                 >
                   <option value="">Select a category</option>
@@ -197,8 +208,8 @@ const AddArtwork = () => {
                   name="medium"
                   placeholder="e.g., Oil on canvas, Digital, Watercolor"
                   className="input input-bordered w-full"
-                  value={formData.medium}
-                  onChange={handleChange}
+                  // value={formData.medium}
+                  // onChange={handleChange}
                 />
               </div>
 
@@ -211,9 +222,9 @@ const AddArtwork = () => {
                   whileFocus={{ scale: 1.01 }}
                   name="description"
                   placeholder="Describe your artwork..."
-                  className="textarea textarea-bordered h-32"
-                  value={formData.description}
-                  onChange={handleChange}
+                  className="textarea textarea-bordered h-32 w-full"
+                  // value={formData.description}
+                  // onChange={handleChange}
                 />
               </div>
 
@@ -229,8 +240,8 @@ const AddArtwork = () => {
                     name="dimensions"
                     placeholder="e.g., 24x36 inches"
                     className="input input-bordered w-full"
-                    value={formData.dimensions}
-                    onChange={handleChange}
+                    // value={formData.dimensions}
+                    // onChange={handleChange}
                   />
                 </div>
 
@@ -244,8 +255,8 @@ const AddArtwork = () => {
                     name="price"
                     placeholder="0.00"
                     className="input input-bordered w-full"
-                    value={formData.price}
-                    onChange={handleChange}
+                    // value={formData.price}
+                    // onChange={handleChange}
                     min="0"
                     step="0.01"
                   />
@@ -261,8 +272,8 @@ const AddArtwork = () => {
                   whileFocus={{ scale: 1.01 }}
                   name="visibility"
                   className="select select-bordered w-full"
-                  value={formData.visibility}
-                  onChange={handleChange}
+                  // value={formData.visibility}
+                  // onChange={handleChange}
                   required
                 >
                   <option value="Public">Public</option>

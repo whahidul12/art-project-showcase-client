@@ -173,10 +173,9 @@ const Login = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
-              className={`btn btn-primary w-full ${loading ? "loading" : ""}`}
-              disabled={loading}
+              className={`btn btn-primary w-full`}
             >
-              {loading ? "Logging in..." : "Login"}
+              Login
             </motion.button>
           </form>
 

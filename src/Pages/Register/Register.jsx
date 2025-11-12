@@ -4,9 +4,11 @@ import { motion } from "motion/react";
 import { AuthContext } from "../../Context/AuthProvider";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
+import useAxios from "../../Hooks/useAxios";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const axiosInstance = useAxios();
   const [errorMsg, setErrorMsg] = useState("");
   const { createUser, setUser, updateUser, SingUpWithGoogleFromProvider } =
     useContext(AuthContext);
@@ -51,7 +53,6 @@ const Register = () => {
     console.log(createUser);
     createUser(email, password)
       .then((userCredential) => {
-        // Signed up
         const user = userCredential.user;
         // console.log(user);
         updateUser({ displayName: name, photoURL: photoUrl })
@@ -66,6 +67,26 @@ const Register = () => {
             console.log(error);
             setUser(user);
           });
+
+        // Signed up
+        const newUser = {
+          name: name,
+          email: user.email,
+          photoURL: photoUrl,
+          firebaseUID: user.uid,
+        };
+
+        console.log("userCredential>>>:", user);
+        console.log("user>>>:", user);
+        console.log("userName>>>:", user.displayName);
+        console.log("newUser", newUser);
+
+        //create user into database
+        axiosInstance
+          .post("/users", newUser)
+          .then((response) =>
+            console.log("create a user from google:", response.data),
+          );
 
         e.target.reset();
         navigate(location.state ? location.state : "/");
@@ -86,6 +107,20 @@ const Register = () => {
       .then((result) => {
         const user = result.user;
         setUser(user);
+        const newUser = {
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          firebaseUID: user.uid,
+        };
+
+        //create user into database
+        axiosInstance
+          .post("/users", newUser)
+          .then((data) =>
+            console.log(`create a user from google: ${data.data}`),
+          );
+        navigate(location.state ? location.state : "/");
       })
       .catch((error) => {
         console.log(">>>", error);
