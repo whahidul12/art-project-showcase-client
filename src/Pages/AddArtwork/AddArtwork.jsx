@@ -6,6 +6,7 @@ import { AuthContext } from "../../Context/AuthProvider";
 
 const AddArtwork = () => {
   const { user } = useContext(AuthContext);
+  console.log(user);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 

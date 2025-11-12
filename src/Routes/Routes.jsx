@@ -6,6 +6,9 @@ import ExploreArtworks from "../Pages/ExploreArtworks/ExploreArtworks";
 import AddArtwork from "../Pages/AddArtwork/AddArtwork";
 import MyFavorites from "../Pages/MyFavorites/MyFavorites";
 import MyGallery from "../Pages/MyGallery/MyGallery";
+import Login from "../Pages/Login/Login";
+import Register from "../Pages/Register/Register";
+import ArtworkDetails from "../Pages/ArtworkDetails/ArtworkDetails";
 
 const Routes = createBrowserRouter([
   {
@@ -34,10 +37,17 @@ const Routes = createBrowserRouter([
       },
       {
         path: "/artwork/:id",
-
-        Component: MyGallery,
+        Component: ArtworkDetails,
       },
     ],
+  },
+  {
+    path: "/auth/login",
+    Component: Login,
+  },
+  {
+    path: "/auth/register",
+    Component: Register,
   },
 ]);
 
