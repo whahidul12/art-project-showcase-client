@@ -150,8 +150,10 @@ const MyFavorites = () => {
             className="py-20 text-center"
           >
             <div className="mb-4 text-6xl">❤️</div>
-            <h3 className="mb-2 text-2xl font-bold">No Favorites Yet</h3>
-            <p className="text-base-content/70 mb-6">
+            <h3 className="text-primary-dark dark:text-primary-light mb-2 text-2xl font-bold">
+              No Favorites Yet
+            </h3>
+            <p className="text-primary-dark dark:text-primary-light mb-6">
               Start exploring artworks and add your favorites
             </p>
             <Link to={"/explore-artworks"}>

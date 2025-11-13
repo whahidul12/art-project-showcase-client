@@ -123,7 +123,7 @@ const ExploreArtworks = () => {
           transition={{ delay: 0.3 }}
           className="mb-6 text-center"
         >
-          <p className="text-base-content/70">
+          <p className="text-primary-dark dark:text-primary-light">
             Found {filteredArtworks.length} artwork
             {filteredArtworks.length !== 1 ? "s" : ""}
             {searchQuery && ` for "${searchQuery}"`}
