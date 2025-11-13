@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { FaRegBookmark } from "react-icons/fa6";
 import { AuthContext } from "../../Context/AuthProvider";
 import useAxios from "../../Hooks/useAxios";
+import { Link } from "react-router";
 
 const MyFavorites = () => {
   const { user } = useContext(AuthContext);
@@ -149,9 +150,9 @@ const MyFavorites = () => {
             <p className="text-base-content/70 mb-6">
               Start exploring artworks and add your favorites
             </p>
-            <a href="/explore">
+            <Link to={"/explore-artworks"}>
               <button className="btn btn-primary">Explore Artworks</button>
-            </a>
+            </Link>
           </motion.div>
         )}
       </div>

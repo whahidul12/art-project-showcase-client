@@ -1,34 +1,57 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router";
 import App from "../App";
-import Home from "../Pages/Home/Home";
-import ExploreArtworks from "../Pages/ExploreArtworks/ExploreArtworks";
-import AddArtwork from "../Pages/AddArtwork/AddArtwork";
-import MyFavorites from "../Pages/MyFavorites/MyFavorites";
-import MyGallery from "../Pages/MyGallery/MyGallery";
+// import Home from "../Pages/Home/Home";
+const Home = lazy(() => import("../Pages/Home/Home"));
+// import ExploreArtworks from "../Pages/ExploreArtworks/ExploreArtworks";
+const ExploreArtworks = lazy(
+  () => import("../Pages/ExploreArtworks/ExploreArtworks"),
+);
+// import AddArtwork from "../Pages/AddArtwork/AddArtwork";
+const AddArtwork = lazy(() => import("../Pages/AddArtwork/AddArtwork"));
+// import MyFavorites from "../Pages/MyFavorites/MyFavorites";
+const MyFavorites = lazy(() => import("../Pages/MyFavorites/MyFavorites"));
+// import MyGallery from "../Pages/MyGallery/MyGallery";
+const MyGallery = lazy(() => import("../Pages/MyGallery/MyGallery"));
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
-import ArtworkDetails from "../Pages/ArtworkDetails/ArtworkDetails";
+// import ArtworkDetails from "../Pages/ArtworkDetails/ArtworkDetails";
+const ArtworkDetails = lazy(
+  () => import("../Pages/ArtworkDetails/ArtworkDetails"),
+);
 import PrivetRoutes from "./PrivetRoutes";
+import NotFound from "../Pages/NotFound/NotFound";
+import LoadingSpinner from "../Components/LoadingSpinner/LoadingSpinner";
 
 const Routes = createBrowserRouter([
   {
     path: "/",
     Component: App,
+    errorElement: <NotFound />,
     children: [
       {
         path: "/",
-        Component: Home,
+        element: (
+          <Suspense fallback={<LoadingSpinner></LoadingSpinner>}>
+            <Home></Home>
+          </Suspense>
+        ),
       },
       {
         path: "/explore-artworks",
-        Component: ExploreArtworks,
+        element: (
+          <Suspense fallback={<LoadingSpinner></LoadingSpinner>}>
+            <ExploreArtworks></ExploreArtworks>
+          </Suspense>
+        ),
       },
       {
         path: "/add-artwork",
         element: (
           <PrivetRoutes>
-            <AddArtwork></AddArtwork>
+            <Suspense fallback={<LoadingSpinner></LoadingSpinner>}>
+              <AddArtwork></AddArtwork>
+            </Suspense>
           </PrivetRoutes>
         ),
       },
@@ -36,7 +59,9 @@ const Routes = createBrowserRouter([
         path: "/my-favorites",
         element: (
           <PrivetRoutes>
-            <MyFavorites></MyFavorites>
+            <Suspense fallback={<LoadingSpinner></LoadingSpinner>}>
+              <MyFavorites></MyFavorites>
+            </Suspense>
           </PrivetRoutes>
         ),
       },
@@ -44,7 +69,9 @@ const Routes = createBrowserRouter([
         path: "/my-gallery",
         element: (
           <PrivetRoutes>
-            <MyGallery></MyGallery>
+            <Suspense fallback={<LoadingSpinner></LoadingSpinner>}>
+              <MyGallery></MyGallery>
+            </Suspense>
           </PrivetRoutes>
         ),
       },
@@ -52,7 +79,9 @@ const Routes = createBrowserRouter([
         path: "/artwork/:id",
         element: (
           <PrivetRoutes>
-            <ArtworkDetails></ArtworkDetails>
+            <Suspense fallback={<LoadingSpinner></LoadingSpinner>}>
+              <ArtworkDetails></ArtworkDetails>
+            </Suspense>
           </PrivetRoutes>
         ),
       },
@@ -65,6 +94,10 @@ const Routes = createBrowserRouter([
   {
     path: "/auth/register",
     Component: Register,
+  },
+  {
+    path: "/*",
+    Component: NotFound,
   },
 ]);
 
