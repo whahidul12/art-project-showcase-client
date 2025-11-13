@@ -1,21 +1,15 @@
 import React, { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router";
 import App from "../App";
-// import Home from "../Pages/Home/Home";
 const Home = lazy(() => import("../Pages/Home/Home"));
-// import ExploreArtworks from "../Pages/ExploreArtworks/ExploreArtworks";
 const ExploreArtworks = lazy(
   () => import("../Pages/ExploreArtworks/ExploreArtworks"),
 );
-// import AddArtwork from "../Pages/AddArtwork/AddArtwork";
 const AddArtwork = lazy(() => import("../Pages/AddArtwork/AddArtwork"));
-// import MyFavorites from "../Pages/MyFavorites/MyFavorites";
 const MyFavorites = lazy(() => import("../Pages/MyFavorites/MyFavorites"));
-// import MyGallery from "../Pages/MyGallery/MyGallery";
 const MyGallery = lazy(() => import("../Pages/MyGallery/MyGallery"));
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
-// import ArtworkDetails from "../Pages/ArtworkDetails/ArtworkDetails";
 const ArtworkDetails = lazy(
   () => import("../Pages/ArtworkDetails/ArtworkDetails"),
 );
