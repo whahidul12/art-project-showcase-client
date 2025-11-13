@@ -48,7 +48,7 @@ const Home = () => {
 
   // Fetch featured artworks
   useEffect(() => {
-    axiosInstance.get("/artwork").then((response) => {
+    axiosInstance.get("/artwork/limit").then((response) => {
       console.log("create a user from google:", response.data);
       setFeaturedArtworks(response.data);
     });

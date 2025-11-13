@@ -31,11 +31,10 @@ const AddArtwork = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const artistName = user?.displayName;
+    const artistName = user?.name;
     const artistEmail = user?.email;
     const artistPhoto = user?.photoURL;
     const likes = 0;
-    const createdAt = new Date().toISOString();
     const title = e.target.title.value;
     const imageUrl = e.target.imageUrl.value;
     const category = e.target.category.value;
@@ -51,7 +50,6 @@ const AddArtwork = () => {
       artistEmail,
       artistPhoto,
       likes,
-      createdAt,
       title,
       imageUrl,
       category,

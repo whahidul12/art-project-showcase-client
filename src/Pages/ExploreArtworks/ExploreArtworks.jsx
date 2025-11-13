@@ -35,12 +35,15 @@ const ExploreArtworks = () => {
   }, [user]);
 
   useEffect(() => {
+    if (!artworks.length) return;
+
     let filtered = artworks;
 
     // Filter by category
     if (selectedCategory !== "All") {
       filtered = filtered.filter(
-        (artwork) => artwork.category === selectedCategory,
+        (artwork) =>
+          artwork.category?.toLowerCase() === selectedCategory.toLowerCase(),
       );
     }
 
@@ -48,13 +51,13 @@ const ExploreArtworks = () => {
     if (searchQuery.trim()) {
       filtered = filtered.filter(
         (artwork) =>
-          artwork.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          artwork.artistName.toLowerCase().includes(searchQuery.toLowerCase()),
+          artwork.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          artwork.artistName?.toLowerCase().includes(searchQuery.toLowerCase()),
       );
     }
 
     setFilteredArtworks(filtered);
-  }, [searchQuery, selectedCategory, artworks]);
+  }, [artworks, searchQuery, selectedCategory]);
 
   return (
     <div className="min-h-screen px-4 py-12">
@@ -133,17 +136,21 @@ const ExploreArtworks = () => {
           </div>
         ) : filteredArtworks.length > 0 ? (
           <motion.div
+            key={selectedCategory + searchQuery}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
             className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
           >
-            {filteredArtworks.map((artwork, index) => (
+            {filteredArtworks.map((artwork) => (
               <motion.div
                 key={artwork._id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.3 }}
+                layout={false} // 🔥 prevents layout animation bugs
               >
                 <ArtworkCard artwork={artwork} id={artwork._id} />
               </motion.div>
