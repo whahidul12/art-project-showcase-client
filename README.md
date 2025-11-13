@@ -1,13 +1,13 @@
-# 🎨 Artify – A Creative Artwork Showcase Platform
+# 🎨 ArtFolio – A Creative Artwork Showcase Platform
 
-Artify is a simple art-sharing website where artists can upload their artworks, explore others, and like or save their favorites.  
+ArtFolio is a simple art-sharing website where artists can upload their artworks, explore others, and like or save their favorites.  
 I made this project as a part of my college assignment using React, Firebase, and MongoDB.
 
 ---
 
 ## 🌐 Live Link
 
-🔗 [Visit Artify Live](https://artify-showcase-one.web.app/)
+🔗 [Visit ArtFolio Live](https://artify-showcase-one.web.app/)
 
 ---
 
@@ -49,5 +49,5 @@ I made this project as a part of my college assignment using React, Firebase, an
 
 ## 👨‍💻 Author
 
-**Name:** Your Name  
-**Email:** your@email.com
+**Name:** Whahidul Islam
+**Email:** whahid.cnits@email.com
