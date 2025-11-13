@@ -297,7 +297,7 @@ const AddArtwork = () => {
                   <input
                     type="text"
                     className="input input-bordered w-full"
-                    value={user?.displayName || ""}
+                    value={user?.name || ""}
                     readOnly
                     disabled
                   />

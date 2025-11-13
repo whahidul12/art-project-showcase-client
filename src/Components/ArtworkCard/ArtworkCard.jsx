@@ -30,7 +30,7 @@ const ArtworkCard = ({
           </div>
         </div>
         {artwork.category && (
-          <div className="badge badge-primary absolute top-4 right-4 shadow-lg">
+          <div className="badge badge-primary absolute top-4 left-4 shadow-lg">
             {artwork.category}
           </div>
         )}
