@@ -20,7 +20,7 @@ const ArtworkDetails = () => {
     // Fetch artwork details
     // This will be replaced with actual API call
     axiosInstance.get(`/artwork/${id}`).then((response) => {
-      console.log("create a user from google:", response.data);
+      // console.log("create a user from google:", response.data);
       setArtwork(response.data);
     });
   }, [id]);

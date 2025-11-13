@@ -131,7 +131,7 @@ const Navbar = () => {
           )}
         </button>
         {user ? (
-          <div className="dropdown dropdown-end">
+          <div className="dropdown dropdown-end ml-2">
             <div
               tabIndex={0}
               role="button"
@@ -143,15 +143,18 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-200 rounded-box z-1 mt-3 w-52 p-2 shadow-xl"
+              className="menu menu-sm dropdown-content rounded-box bg-card-light dark:bg-card-dark z-1 mt-3 w-52 p-2 shadow-xl"
             >
               <li className="menu-title">
-                <span className="text-base font-semibold">
+                <span className="text-primary-dark dark:text-primary-light text-base font-semibold">
                   {user?.name || "User"}
                 </span>
               </li>
               <li>
-                <button onClick={handleLogOut} className="text-error">
+                <button
+                  onClick={handleLogOut}
+                  className="text-error text-base hover:font-bold hover:underline"
+                >
                   Logout
                 </button>
               </li>
@@ -159,10 +162,16 @@ const Navbar = () => {
           </div>
         ) : (
           <>
-            <Link to={"/auth/login"} className="btn">
+            <Link
+              to={"/auth/login"}
+              className="btn bg-card-light dark:bg-card-dark text-primary-dark dark:text-primary-light"
+            >
               LogIn
             </Link>
-            <Link to={"/auth/register"} className="btn hidden sm:flex">
+            <Link
+              to={"/auth/register"}
+              className="btn bg-card-light dark:bg-card-dark text-primary-dark dark:text-primary-light hidden sm:flex"
+            >
               Register
             </Link>
           </>

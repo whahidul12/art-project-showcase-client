@@ -16,7 +16,7 @@ const MyGallery = () => {
 
   useEffect(() => {
     axiosInstance.get(`/artwork/user/${user?.email}`).then((response) => {
-      console.log("create a user from google:", response.data);
+      // console.log("create a user from google:", response.data);
       setArtworks(response.data);
     });
   }, [user]);

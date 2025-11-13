@@ -50,7 +50,7 @@ const Register = () => {
       return;
     }
 
-    console.log(createUser);
+    // console.log(createUser);
     createUser(email, password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -75,11 +75,6 @@ const Register = () => {
           photoURL: photoUrl,
           firebaseUID: user.uid,
         };
-
-        console.log("userCredential>>>:", user);
-        console.log("user>>>:", user);
-        console.log("userName>>>:", user.displayName);
-        console.log("newUser", newUser);
 
         //create user into database
         axiosInstance

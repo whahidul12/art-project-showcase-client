@@ -13,7 +13,7 @@ const AddArtwork = () => {
 
   let artistUserID = null;
   axiosInstance.get(`/users/${user?.email}`).then((response) => {
-    console.log("create a user from google:", response.data);
+    // console.log("create a user from google:", response.data);
     artistUserID = response.data._id;
   });
   const categories = [
