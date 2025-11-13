@@ -1,61 +1,35 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { motion } from "motion/react";
 import ArtworkCard from "../../Components/ArtworkCard/ArtworkCard";
 // import toast from 'react-hot-toast';
 import Swal from "sweetalert2";
+import { FaRegBookmark } from "react-icons/fa6";
+import { AuthContext } from "../../Context/AuthProvider";
+import useAxios from "../../Hooks/useAxios";
 
 const MyFavorites = () => {
+  const { user } = useContext(AuthContext);
+  const axiosInstance = useAxios();
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchFavorites();
-  }, []);
+  }, [user]);
 
   const fetchFavorites = async () => {
-    // This will be replaced with actual API call
-    setTimeout(() => {
-      const mockFavorites = [
-        {
-          _id: "1",
-          imageUrl:
-            "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=500&h=500&fit=crop",
-          title: "Abstract Dreams",
-          artistName: "Sarah Johnson",
-          category: "Abstract",
-          likes: 245,
-        },
-        {
-          _id: "2",
-          imageUrl:
-            "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=500&h=500&fit=crop",
-          title: "Mountain Serenity",
-          artistName: "Michael Chen",
-          category: "Landscape",
-          likes: 189,
-        },
-        {
-          _id: "3",
-          imageUrl:
-            "https://images.unsplash.com/photo-1561214115-f2f134cc4912?w=500&h=500&fit=crop",
-          title: "Urban Poetry",
-          artistName: "Emma Davis",
-          category: "Street Art",
-          likes: 312,
-        },
-        {
-          _id: "4",
-          imageUrl:
-            "https://images.unsplash.com/photo-1582561833449-3a9dd1a4a5ec?w=500&h=500&fit=crop",
-          title: "Digital Harmony",
-          artistName: "James Wilson",
-          category: "Digital Art",
-          likes: 428,
-        },
-      ];
-      setFavorites(mockFavorites);
+    if (!user) return;
+
+    try {
+      const response = await axiosInstance.get(
+        `/users/${user.email}/favorites`,
+      );
+      setFavorites(response.data);
+    } catch (error) {
+      console.error(error);
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   };
 
   const handleRemoveFavorite = async (artworkId) => {
@@ -71,18 +45,12 @@ const MyFavorites = () => {
 
     if (result.isConfirmed) {
       try {
-        // This will be replaced with actual API call
-        console.log("Removing favorite:", artworkId);
-
-        // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 500));
-
+        await axiosInstance.delete(
+          `/users/${user.email}/favorites/${artworkId}`,
+        );
         setFavorites(favorites.filter((artwork) => artwork._id !== artworkId));
-
-        // toast.success('Removed from favorites!');
       } catch (error) {
         console.error(error);
-        // toast.error('Failed to remove favorite');
       }
     }
   };
@@ -117,25 +85,10 @@ const MyFavorites = () => {
             >
               <div className="stats shadow-lg">
                 <div className="stat">
-                  <div className="stat-figure text-secondary">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-8 w-8"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-                      />
-                    </svg>
-                  </div>
                   <div className="stat-title">Total Favorites</div>
-                  <div className="stat-value text-secondary">
+                  <div className="stat-value text-secondary flex items-center justify-center gap-2">
                     {favorites.length}
+                    <FaRegBookmark />
                   </div>
                   <div className="stat-desc">Keep discovering amazing art!</div>
                 </div>
@@ -156,7 +109,7 @@ const MyFavorites = () => {
                   transition={{ delay: index * 0.1 }}
                   className="relative"
                 >
-                  <ArtworkCard artwork={artwork} />
+                  <ArtworkCard artwork={artwork} id={artwork._id} />
 
                   {/* Remove Button Overlay */}
                   <motion.button

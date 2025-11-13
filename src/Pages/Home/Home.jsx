@@ -263,7 +263,7 @@ const Home = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="card from-primary/10 to-secondary/10 bg-gradient-to-br shadow-xl"
+              className="card from-primary/10 to-secondary/10 bg-linear-to-br shadow-xl"
             >
               <div className="card-body items-center text-center">
                 <div className="mb-4 text-5xl">{stat.icon}</div>

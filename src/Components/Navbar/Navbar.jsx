@@ -147,7 +147,7 @@ const Navbar = () => {
             >
               <li className="menu-title">
                 <span className="text-base font-semibold">
-                  {user.displayName || "User"}
+                  {user?.name || "User"}
                 </span>
               </li>
               <li>

@@ -10,12 +10,15 @@ import {
 } from "firebase/auth";
 import React, { createContext, useEffect, useState } from "react";
 import auth from "../Firebase/firebase.config";
+import useAxios from "../Hooks/useAxios";
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const axiosInstance = useAxios();
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -55,6 +58,17 @@ const AuthProvider = ({ children }) => {
       unSubscribe();
     };
   }, []);
+
+  //database theke user_fav_list state check kora hocce
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (auth.currentUser?.email) {
+        const res = await axiosInstance.get(`/users/${auth.currentUser.email}`);
+        setUser(res.data);
+      }
+    };
+    fetchUser();
+  }, [auth.currentUser]);
 
   const authData = {
     user,

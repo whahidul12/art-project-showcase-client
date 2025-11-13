@@ -25,39 +25,63 @@ const ArtworkDetails = () => {
     });
   }, [id]);
 
-  const handleLike = async () => {
-    if (!user) {
-      //   toast.error("Please login to like artworks");
-      return;
+  useEffect(() => {
+    if (user && artwork) {
+      // Compare string values of IDs
+      const isFav = user.user_fav_list?.some(
+        (favId) => favId.toString() === artwork._id.toString(),
+      );
+      setIsFavorited(isFav);
     }
+    if (user && artwork) {
+      const likedBy = artwork.likedBy || [];
+      setIsLiked(likedBy.includes(user.email));
+    }
+  }, [user, artwork]);
+
+  const handleLike = async () => {
+    if (!user) return;
 
     try {
-      setIsLiked(!isLiked);
+      const res = await axiosInstance.post(`/artwork/${artwork._id}/like`, {
+        userEmail: user.email,
+      });
+
       setArtwork({
         ...artwork,
-        likes: isLiked ? artwork.likes - 1 : artwork.likes + 1,
+        likes: res.data.likes,
+        likedBy: res.data.likedBy,
       });
-      //   toast.success(isLiked ? "Removed like" : "Liked!");
+
+      setIsLiked(res.data.likedBy.includes(user.email));
     } catch (error) {
       console.error(error);
-      //   toast.error("Failed to update like");
     }
   };
 
   const handleAddToFavorites = async () => {
     if (!user) {
-      //   toast.error("Please login to add favorites");
+      // toast.error("Please login to add favorites");
       return;
     }
 
     try {
+      if (!isFavorited) {
+        // Add favorite
+        await axiosInstance.post(`/users/${user.email}/favorites`, {
+          artworkId: artwork._id,
+        });
+      } else {
+        // Remove favorite
+        await axiosInstance.delete(
+          `/users/${user.email}/favorites/${artwork._id}`,
+        );
+      }
+
       setIsFavorited(!isFavorited);
-      //   toast.success(
-      //     isFavorited ? "Removed from favorites" : "Added to favorites!",
-      //   );
     } catch (error) {
       console.error(error);
-      //   toast.error("Failed to update favorites");
+      // toast.error("Failed to update favorites");
     }
   };
 
