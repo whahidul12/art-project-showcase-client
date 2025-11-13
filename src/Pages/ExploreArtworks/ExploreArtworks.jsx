@@ -60,7 +60,7 @@ const ExploreArtworks = () => {
   }, [artworks, searchQuery, selectedCategory]);
 
   return (
-    <div className="min-h-screen px-4 py-12">
+    <div className="from-primary/10 to-secondary/10 min-h-screen bg-linear-to-br px-4 py-12">
       <div className="container mx-auto">
         {/* Header */}
         <motion.div
@@ -68,10 +68,10 @@ const ExploreArtworks = () => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-12 text-center"
         >
-          <h1 className="gradient-text mb-4 text-5xl font-bold">
+          <h1 className="gradient-text text-primary-dark dark:text-primary-light mb-4 text-5xl font-bold">
             Explore Artworks
           </h1>
-          <p className="text-base-content/70 text-xl">
+          <p className="text-primary-dark dark:text-primary-light text-xl">
             Discover amazing artworks from talented artists around the world
           </p>
         </motion.div>
@@ -89,7 +89,7 @@ const ExploreArtworks = () => {
               <input
                 type="text"
                 placeholder="Search by title or artist..."
-                className="input input-bordered w-full"
+                className="input input-bordered bg-primary-light dark:bg-primary-dark text-primary-dark dark:text-primary-light w-full outline-1"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -104,8 +104,10 @@ const ExploreArtworks = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setSelectedCategory(category)}
-                className={`btn btn-sm ${
-                  selectedCategory === category ? "btn-primary" : "btn-outline"
+                className={`btn ${
+                  selectedCategory === category
+                    ? "bg-blue"
+                    : "bg-card-light dark:bg-card-dark text-primary-dark dark:text-primary-light"
                 }`}
               >
                 {category}

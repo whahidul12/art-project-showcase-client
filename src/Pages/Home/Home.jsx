@@ -55,7 +55,7 @@ const Home = () => {
   }, [user]);
 
   return (
-    <div className="bg-primary-light dark:bg-primary-dark">
+    <div className="from-primary/10 to-secondary/10 bg-linear-to-br">
       {/* Hero Banner/Slider */}
       <div className="relative h-[600px] overflow-hidden">
         {slides.map((slide, index) => (
@@ -201,9 +201,9 @@ const Home = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.2 }}
-                className="card bg-base-100 shadow-xl transition-all hover:shadow-2xl"
+                className="card shadow-xl transition-all hover:shadow-2xl"
               >
-                <div className="card-body bg-card-light dark:bg-card-dark items-center text-center">
+                <div className="card-body from-primary/10 to-secondary/10 text-primary-dark dark:text-primary-light items-center rounded-2xl bg-linear-to-br text-center">
                   <div className="avatar mb-4">
                     <div className="ring-primary ring-offset-base-100 w-24 rounded-full ring ring-offset-2">
                       <img
@@ -213,7 +213,7 @@ const Home = () => {
                     </div>
                   </div>
                   <h3 className="card-title">Artist Name {artist}</h3>
-                  <p className="text-base-content/70">
+                  <p className="text-primary-dark dark:text-primary-light text-base">
                     {50 + artist * 10} Artworks
                   </p>
                   <div className="rating rating-sm">
@@ -234,6 +234,7 @@ const Home = () => {
           </div>
         </div>
       </section>
+
       {/* Community Highlights */}
       <section className="container mx-auto px-4 py-20">
         <motion.div
@@ -242,10 +243,10 @@ const Home = () => {
           viewport={{ once: true }}
           className="mb-12 text-center"
         >
-          <h2 className="mb-4 text-4xl font-bold md:text-5xl">
+          <h2 className="text-primary-dark dark:text-primary-light mb-4 text-4xl font-bold md:text-5xl">
             Community Highlights
           </h2>
-          <p className="text-base-content/70 text-xl">
+          <p className="text-primary-dark dark:text-primary-light text-xl">
             Join our vibrant community of artists and art enthusiasts
           </p>
         </motion.div>
@@ -263,7 +264,7 @@ const Home = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="card from-primary/10 to-secondary/10 bg-linear-to-br shadow-xl"
+              className="card from-primary/10 to-secondary/10 text-primary-dark dark:text-primary-light rounded-2xl bg-linear-to-br shadow-xl"
             >
               <div className="card-body items-center text-center">
                 <div className="mb-4 text-5xl">{stat.icon}</div>

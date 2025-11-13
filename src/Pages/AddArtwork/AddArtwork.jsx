@@ -104,17 +104,17 @@ const AddArtwork = () => {
   };
 
   return (
-    <div className="from-primary/5 via-base-100 to-secondary/5 min-h-screen bg-linear-to-br px-4 py-12">
+    <div className="from-primary/10 to-secondary/10 min-h-screen bg-linear-to-br px-4 py-12">
       <div className="container mx-auto max-w-3xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-12 text-center"
         >
-          <h1 className="gradient-text mb-4 text-5xl font-bold">
+          <h1 className="gradient-text text-primary-dark dark:text-primary-light mb-4 text-5xl font-bold">
             Add New Artwork
           </h1>
-          <p className="text-base-content/70 text-xl">
+          <p className="text-primary-dark dark:text-primary-light text-xl">
             Share your masterpiece with the world
           </p>
         </motion.div>
@@ -125,50 +125,38 @@ const AddArtwork = () => {
           transition={{ delay: 0.2 }}
           className="card bg-base-100 shadow-2xl"
         >
-          <div className="card-body">
+          <div className="card-body bg-card-light dark:bg-card-dark">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Image URL */}
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text font-medium">Image URL *</span>
+                  <span className="label-text text-primary-dark dark:text-primary-light font-medium">
+                    Image URL *
+                  </span>
                 </label>
                 <motion.input
                   whileFocus={{ scale: 1.01 }}
                   type="url"
                   name="imageUrl"
                   placeholder="https://example.com/image.jpg"
-                  className="input input-bordered w-full"
-                  // value={formData.imageUrl}
-                  // onChange={handleChange}
+                  className="input input-bordered bg-card-light dark:bg-card-dark outline-primary-dark text-primary-dark dark:text-primary-light w-full outline-1"
                   required
                 />
-                {/* {imageUrl && (
-                  <div className="mt-4">
-                    <img
-                      src={formData.imageUrl}
-                      alt="Preview"
-                      className="h-64 w-full rounded-lg object-cover"
-                      onError={(e) => {
-                        e.target.style.display = "none";
-                      }}
-                    />
-                  </div>
-                )} */}
               </div>
 
               {/* Title */}
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text font-medium">Title *</span>
+                  <span className="label-text text-primary-dark dark:text-primary-light font-medium">
+                    Title *
+                  </span>
                 </label>
                 <motion.input
                   whileFocus={{ scale: 1.01 }}
                   type="text"
                   name="title"
                   placeholder="Enter artwork title"
-                  className="input input-bordered w-full"
-                  // value={formData.title}
-                  // onChange={handleChange}
+                  className="input input-bordered bg-card-light dark:bg-card-dark outline-primary-dark text-primary-dark dark:text-primary-light w-full outline-1"
                   required
                 />
               </div>
@@ -176,19 +164,23 @@ const AddArtwork = () => {
               {/* Category */}
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text font-medium">Category *</span>
+                  <span className="label-text text-primary-dark dark:text-primary-light font-medium">
+                    Category *
+                  </span>
                 </label>
                 <motion.select
                   whileFocus={{ scale: 1.01 }}
                   name="category"
-                  className="select select-bordered w-full"
-                  // value={formData.category}
-                  // onChange={handleChange}
+                  className="select select-bordered bg-card-light dark:bg-card-dark outline-primary-dark text-primary-dark dark:text-primary-light w-full outline-1"
                   required
                 >
                   <option value="">Select a category</option>
                   {categories.map((category) => (
-                    <option key={category} value={category}>
+                    <option
+                      className="hover:bg-white dark:hover:bg-black"
+                      key={category}
+                      value={category}
+                    >
                       {category}
                     </option>
                   ))}
@@ -198,31 +190,31 @@ const AddArtwork = () => {
               {/* Medium/Tools */}
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text font-medium">Medium/Tools</span>
+                  <span className="label-text text-primary-dark dark:text-primary-light font-medium">
+                    Medium/Tools
+                  </span>
                 </label>
                 <motion.input
                   whileFocus={{ scale: 1.01 }}
                   type="text"
                   name="medium"
                   placeholder="e.g., Oil on canvas, Digital, Watercolor"
-                  className="input input-bordered w-full"
-                  // value={formData.medium}
-                  // onChange={handleChange}
+                  className="input input-bordered bg-card-light dark:bg-card-dark outline-primary-dark text-primary-dark dark:text-primary-light w-full outline-1"
                 />
               </div>
 
               {/* Description */}
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text font-medium">Description</span>
+                  <span className="label-text text-primary-dark dark:text-primary-light font-medium">
+                    Description
+                  </span>
                 </label>
                 <motion.textarea
                   whileFocus={{ scale: 1.01 }}
                   name="description"
                   placeholder="Describe your artwork..."
-                  className="textarea textarea-bordered h-32 w-full"
-                  // value={formData.description}
-                  // onChange={handleChange}
+                  className="textarea textarea-bordered bg-card-light dark:bg-card-dark outline-primary-dark text-primary-dark dark:text-primary-light h-32 w-full outline-1"
                 />
               </div>
 
@@ -230,31 +222,31 @@ const AddArtwork = () => {
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div className="form-control">
                   <label className="label">
-                    <span className="label-text font-medium">Dimensions</span>
+                    <span className="label-text text-primary-dark dark:text-primary-light font-medium">
+                      Dimensions
+                    </span>
                   </label>
                   <motion.input
                     whileFocus={{ scale: 1.01 }}
                     type="text"
                     name="dimensions"
                     placeholder="e.g., 24x36 inches"
-                    className="input input-bordered w-full"
-                    // value={formData.dimensions}
-                    // onChange={handleChange}
+                    className="input input-bordered bg-card-light dark:bg-card-dark outline-primary-dark text-primary-dark dark:text-primary-light w-full outline-1"
                   />
                 </div>
 
                 <div className="form-control">
                   <label className="label">
-                    <span className="label-text font-medium">Price (USD)</span>
+                    <span className="label-text text-primary-dark dark:text-primary-light font-medium">
+                      Price (USD)
+                    </span>
                   </label>
                   <motion.input
                     whileFocus={{ scale: 1.01 }}
                     type="number"
                     name="price"
                     placeholder="0.00"
-                    className="input input-bordered w-full"
-                    // value={formData.price}
-                    // onChange={handleChange}
+                    className="input input-bordered bg-card-light dark:bg-card-dark outline-primary-dark text-primary-dark dark:text-primary-light w-full outline-1"
                     min="0"
                     step="0.01"
                   />
@@ -264,37 +256,51 @@ const AddArtwork = () => {
               {/* Visibility */}
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text font-medium">Visibility *</span>
+                  <span className="label-text text-primary-dark dark:text-primary-light font-medium">
+                    Visibility *
+                  </span>
                 </label>
                 <motion.select
                   whileFocus={{ scale: 1.01 }}
                   name="visibility"
-                  className="select select-bordered w-full"
-                  // value={formData.visibility}
-                  // onChange={handleChange}
+                  className="select select-bordered bg-card-light dark:bg-card-dark outline-primary-dark text-primary-dark dark:text-primary-light w-full outline-1"
                   required
                 >
-                  <option value="Public">Public</option>
-                  <option value="Private">Private</option>
+                  <option
+                    className="hover:bg-white dark:hover:bg-black"
+                    value="Public"
+                  >
+                    Public
+                  </option>
+                  <option
+                    className="hover:bg-white dark:hover:bg-black"
+                    value="Private"
+                  >
+                    Private
+                  </option>
                 </motion.select>
                 <label className="label">
-                  <span className="label-text-alt">
+                  <span className="label-text-alt text-primary-dark dark:text-primary-light">
                     Private artworks will only be visible in your gallery
                   </span>
                 </label>
               </div>
 
               {/* Artist Info (Read-only) */}
-              <div className="divider">Artist Information</div>
+              <div className="divider text-primary-dark dark:text-primary-light">
+                Artist Information
+              </div>
 
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div className="form-control">
                   <label className="label">
-                    <span className="label-text font-medium">Artist Name</span>
+                    <span className="label-text text-primary-dark dark:text-primary-light font-medium">
+                      Artist Name
+                    </span>
                   </label>
                   <input
                     type="text"
-                    className="input input-bordered w-full"
+                    className="input input-bordered bg-card-light dark:bg-card-dark outline-primary-dark text-primary-dark dark:text-primary-light w-full outline-1"
                     value={user?.name || ""}
                     readOnly
                     disabled
@@ -303,11 +309,13 @@ const AddArtwork = () => {
 
                 <div className="form-control">
                   <label className="label">
-                    <span className="label-text font-medium">Artist Email</span>
+                    <span className="label-text text-primary-dark dark:text-primary-light font-medium">
+                      Artist Email
+                    </span>
                   </label>
                   <input
                     type="email"
-                    className="input input-bordered w-full"
+                    className="input input-bordered bg-card-light dark:bg-card-dark outline-primary-dark text-primary-dark dark:text-primary-light w-full outline-1"
                     value={user?.email || ""}
                     readOnly
                     disabled

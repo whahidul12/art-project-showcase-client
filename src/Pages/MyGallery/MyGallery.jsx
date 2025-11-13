@@ -87,15 +87,17 @@ const MyGallery = () => {
   };
 
   return (
-    <div className="min-h-screen px-4 py-12">
+    <div className="from-primary/10 to-secondary/10 min-h-screen bg-linear-to-br px-4 py-12">
       <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-12 text-center"
         >
-          <h1 className="gradient-text mb-4 text-5xl font-bold">My Gallery</h1>
-          <p className="text-base-content/70 text-xl">
+          <h1 className="gradient-text text-primary-dark dark:text-primary-light mb-4 text-5xl font-bold">
+            My Gallery
+          </h1>
+          <p className="text-primary-dark dark:text-primary-light text-xl">
             Manage your artworks collection
           </p>
         </motion.div>

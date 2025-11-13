@@ -4,7 +4,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="footer footer-center bg-base-200 text-base-content rounded-t-full p-10">
+    <footer className="footer footer-center bg-crime dark:bg-card-dark text-base-content border-blue border-t p-10">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -18,7 +18,7 @@ const Footer = () => {
             rel="noopener noreferrer"
             whileHover={{ scale: 1.2, rotate: 5 }}
             whileTap={{ scale: 0.9 }}
-            className="hover:text-primary transition-colors"
+            className="hover:text-primary text-primary-dark dark:text-primary-light transition-colors"
             aria-label="Twitter"
           >
             <svg
@@ -38,7 +38,7 @@ const Footer = () => {
             rel="noopener noreferrer"
             whileHover={{ scale: 1.2, rotate: 5 }}
             whileTap={{ scale: 0.9 }}
-            className="hover:text-primary transition-colors"
+            className="hover:text-primary text-primary-dark dark:text-primary-light transition-colors"
             aria-label="Facebook"
           >
             <svg
@@ -58,7 +58,7 @@ const Footer = () => {
             rel="noopener noreferrer"
             whileHover={{ scale: 1.2, rotate: 5 }}
             whileTap={{ scale: 0.9 }}
-            className="hover:text-primary transition-colors"
+            className="hover:text-primary text-primary-dark dark:text-primary-light transition-colors"
             aria-label="Instagram"
           >
             <svg
@@ -80,8 +80,12 @@ const Footer = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <p className="gradient-text text-xl font-bold">ArtFolio</p>
-        <p className="text-sm">Where Creativity Meets Community</p>
+        <p className="gradient-text text-primary-dark dark:text-primary-light text-xl font-bold">
+          ArtFolio
+        </p>
+        <p className="text-primary-dark dark:text-primary-light text-sm">
+          Where Creativity Meets Community
+        </p>
       </motion.div>
 
       <motion.div
@@ -90,10 +94,10 @@ const Footer = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.4 }}
       >
-        <p className="text-sm">
+        <p className="text-primary-dark dark:text-primary-light text-sm">
           © {currentYear} ArtFolio. All rights reserved.
         </p>
-        <p className="mt-2 text-xs">
+        <p className="text-primary-dark dark:text-primary-light mt-2 text-xs">
           Contact: info@artfolio.com | +880 183 943 9896
         </p>
       </motion.div>

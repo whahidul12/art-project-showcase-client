@@ -57,17 +57,17 @@ const MyFavorites = () => {
   };
 
   return (
-    <div className="min-h-screen px-4 py-12">
+    <div className="from-primary/10 to-secondary/10 min-h-screen bg-linear-to-br px-4 py-12">
       <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-12 text-center"
         >
-          <h1 className="gradient-text mb-4 text-5xl font-bold">
+          <h1 className="gradient-text text-primary-dark dark:text-primary-light mb-4 text-5xl font-bold">
             My Favorites
           </h1>
-          <p className="text-base-content/70 text-xl">
+          <p className="text-primary-dark dark:text-primary-light text-xl">
             Your curated collection of inspiring artworks
           </p>
         </motion.div>
@@ -84,14 +84,18 @@ const MyFavorites = () => {
               transition={{ delay: 0.2 }}
               className="mb-8 text-center"
             >
-              <div className="stats shadow-lg">
+              <div className="stats from-primary/10 to-secondary/10 bg-linear-to-br shadow-lg">
                 <div className="stat">
-                  <div className="stat-title">Total Favorites</div>
+                  <div className="stat-title text-primary-dark dark:text-primary-light">
+                    Total Favorites
+                  </div>
                   <div className="stat-value text-secondary flex items-center justify-center gap-2">
                     {favorites.length}
                     <FaRegBookmark />
                   </div>
-                  <div className="stat-desc">Keep discovering amazing art!</div>
+                  <div className="stat-desc text-primary-dark dark:text-primary-light">
+                    Keep discovering amazing art!
+                  </div>
                 </div>
               </div>
             </motion.div>

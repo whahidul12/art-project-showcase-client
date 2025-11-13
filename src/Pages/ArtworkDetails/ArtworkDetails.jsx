@@ -143,8 +143,10 @@ const ArtworkDetails = () => {
             className="space-y-6"
           >
             <div>
-              <h1 className="mb-4 text-5xl font-bold">{artwork.title}</h1>
-              <p className="text-base-content/70 text-xl">
+              <h1 className="text-primary-dark dark:text-primary-light mb-4 text-5xl font-bold">
+                {artwork.title}
+              </h1>
+              <p className="text-primary-dark dark:text-primary-light text-xl">
                 by{" "}
                 <span className="text-primary font-semibold">
                   {artwork.artistName}
@@ -153,9 +155,11 @@ const ArtworkDetails = () => {
             </div>
 
             {/* Artist Info Card */}
-            <div className="card bg-base-200">
+            <div className="card bg-card-light dark:bg-card-dark">
               <div className="card-body">
-                <h3 className="card-title">Artist Information</h3>
+                <h3 className="card-title text-primary-dark dark:text-primary-light">
+                  Artist Information
+                </h3>
                 <div className="flex items-center gap-4">
                   <div className="avatar">
                     <div className="ring-primary ring-offset-base-100 w-16 rounded-full ring ring-offset-2">
@@ -170,8 +174,10 @@ const ArtworkDetails = () => {
                     </div>
                   </div>
                   <div>
-                    <p className="text-lg font-bold">{artwork.artistName}</p>
-                    <p className="text-base-content/70 text-sm">
+                    <p className="text-primary-dark dark:text-primary-light text-lg font-bold">
+                      {artwork.artistName}
+                    </p>
+                    <p className="text-primary-dark dark:text-primary-light text-sm">
                       {artwork.totalArtworks} Total Artworks
                     </p>
                   </div>
@@ -180,36 +186,50 @@ const ArtworkDetails = () => {
             </div>
 
             {/* Artwork Info */}
-            <div className="card bg-base-200">
+            <div className="card bg-card-light dark:bg-card-dark">
               <div className="card-body">
-                <h3 className="card-title">Artwork Details</h3>
+                <h3 className="card-title text-primary-dark dark:text-primary-light">
+                  Artwork Details
+                </h3>
 
                 {artwork.medium && (
                   <div className="border-base-300 flex justify-between border-b py-2">
-                    <span className="font-medium">Medium:</span>
-                    <span>{artwork.medium}</span>
+                    <span className="text-primary-dark dark:text-primary-light font-medium">
+                      Medium:
+                    </span>
+                    <span className="text-primary-dark dark:text-primary-light">
+                      {artwork.medium}
+                    </span>
                   </div>
                 )}
 
                 {artwork.dimensions && (
                   <div className="border-base-300 flex justify-between border-b py-2">
-                    <span className="font-medium">Dimensions:</span>
-                    <span>{artwork.dimensions}</span>
+                    <span className="text-primary-dark dark:text-primary-light font-medium">
+                      Dimensions:
+                    </span>
+                    <span className="text-primary-dark dark:text-primary-light">
+                      {artwork.dimensions}
+                    </span>
                   </div>
                 )}
 
                 {artwork.price && (
                   <div className="border-base-300 flex justify-between border-b py-2">
-                    <span className="font-medium">Price:</span>
-                    <span className="text-primary font-bold">
+                    <span className="text-primary-dark dark:text-primary-light font-medium">
+                      Price:
+                    </span>
+                    <span className="text-primary-dark dark:text-primary-light font-bold">
                       ${artwork.price}
                     </span>
                   </div>
                 )}
 
                 <div className="flex justify-between py-2">
-                  <span className="font-medium">Posted:</span>
-                  <span>
+                  <span className="text-primary-dark dark:text-primary-light font-medium">
+                    Posted:
+                  </span>
+                  <span className="text-primary-dark dark:text-primary-light">
                     {new Date(artwork.createdAt).toLocaleDateString()}
                   </span>
                 </div>
@@ -218,10 +238,12 @@ const ArtworkDetails = () => {
 
             {/* Description */}
             {artwork.description && (
-              <div className="card bg-base-200">
+              <div className="card bg-card-light dark:bg-card-dark">
                 <div className="card-body">
-                  <h3 className="card-title">Description</h3>
-                  <p className="text-base-content/80 leading-relaxed">
+                  <h3 className="card-title text-primary-dark dark:text-primary-light">
+                    Description
+                  </h3>
+                  <p className="text-primary-dark dark:text-primary-light leading-relaxed">
                     {artwork.description}
                   </p>
                 </div>
@@ -283,8 +305,10 @@ const ArtworkDetails = () => {
 
             {/* Share Buttons */}
             <div className="flex gap-2">
-              <span className="self-center text-sm font-medium">Share:</span>
-              <button className="btn btn-sm btn-circle btn-ghost">
+              <span className="text-primary-dark dark:text-primary-light self-center text-sm font-medium">
+                Share:
+              </span>
+              <button className="btn btn-sm btn-circle btn-ghost text-primary-dark dark:text-primary-light">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5"
@@ -294,7 +318,7 @@ const ArtworkDetails = () => {
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
               </button>
-              <button className="btn btn-sm btn-circle btn-ghost">
+              <button className="btn btn-sm btn-circle btn-ghost text-primary-dark dark:text-primary-light">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5"
@@ -304,7 +328,7 @@ const ArtworkDetails = () => {
                   <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
                 </svg>
               </button>
-              <button className="btn btn-sm btn-circle btn-ghost">
+              <button className="btn btn-sm btn-circle btn-ghost text-primary-dark dark:text-primary-light">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5"

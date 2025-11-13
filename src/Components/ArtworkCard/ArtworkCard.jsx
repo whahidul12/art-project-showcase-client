@@ -16,7 +16,7 @@ const ArtworkCard = ({
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.4 }}
       whileHover={{ y: -8 }}
-      className="card bg-base-100 group overflow-hidden shadow-xl transition-all duration-300 hover:shadow-2xl"
+      className="card bg-card-light dark:bg-card-dark group overflow-hidden shadow-xl transition-all duration-300 hover:shadow-2xl"
     >
       <figure className="relative h-64 overflow-hidden">
         <img
@@ -37,7 +37,7 @@ const ArtworkCard = ({
       </figure>
 
       <div className="card-body">
-        <h2 className="card-title">
+        <h2 className="card-title text-primary-dark dark:text-primary-light">
           {artwork.title}
           {artwork.visibility === "Private" && (
             <div
@@ -50,7 +50,7 @@ const ArtworkCard = ({
           )}
         </h2>
 
-        <p className="text-base-content/70 text-sm">
+        <p className="text-primary-dark dark:text-primary-light text-sm">
           by{" "}
           <span className="text-primary font-semibold">
             {artwork.artistName}
@@ -67,7 +67,9 @@ const ArtworkCard = ({
             >
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
             </svg>
-            <span className="font-medium">{artwork.likes || 0} likes</span>
+            <span className="text-primary-dark dark:text-primary-light font-medium">
+              {artwork.likes || 0} likes
+            </span>
           </div>
         )}
 
