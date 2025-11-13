@@ -2,7 +2,13 @@ import { motion } from "motion/react";
 import { Link } from "react-router";
 import { Tooltip } from "react-tooltip";
 
-const ArtworkCard = ({ artwork, showActions = false, onDelete, onUpdate }) => {
+const ArtworkCard = ({
+  artwork,
+  id,
+  showActions = false,
+  onDelete,
+  onUpdate,
+}) => {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
@@ -86,7 +92,7 @@ const ArtworkCard = ({ artwork, showActions = false, onDelete, onUpdate }) => {
               </motion.button>
             </>
           ) : (
-            <Link to={`/artwork/${artwork._id}`}>
+            <Link to={`/artwork/${id}`}>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

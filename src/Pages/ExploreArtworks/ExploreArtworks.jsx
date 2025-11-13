@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { motion } from "motion/react";
 import ArtworkCard from "../../Components/ArtworkCard/ArtworkCard";
+import { AuthContext } from "../../Context/AuthProvider";
+import useAxios from "../../Hooks/useAxios";
 
 const ExploreArtworks = () => {
+  const { user, loading } = useContext(AuthContext);
+  const axiosInstance = useAxios();
   const [artworks, setArtworks] = useState([]);
   const [filteredArtworks, setFilteredArtworks] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
 
@@ -17,112 +20,20 @@ const ExploreArtworks = () => {
     "Digital Art",
     "Street Art",
     "Nature",
+    "Photography",
+    "Mixed Media",
+    "Sculpture",
   ];
 
   // Fetch artworks
   useEffect(() => {
-    // This will be replaced with actual API call
-    // For now, using mock data
-    setTimeout(() => {
-      const mockArtworks = [
-        {
-          _id: "1",
-          imageUrl:
-            "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=500&h=500&fit=crop",
-          title: "Abstract Dreams",
-          artistName: "Sarah Johnson",
-          category: "Abstract",
-          likes: 245,
-          visibility: "Public",
-        },
-        {
-          _id: "2",
-          imageUrl:
-            "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=500&h=500&fit=crop",
-          title: "Mountain Serenity",
-          artistName: "Michael Chen",
-          category: "Landscape",
-          likes: 189,
-          visibility: "Public",
-        },
-        {
-          _id: "3",
-          imageUrl:
-            "https://images.unsplash.com/photo-1561214115-f2f134cc4912?w=500&h=500&fit=crop",
-          title: "Urban Poetry",
-          artistName: "Emma Davis",
-          category: "Street Art",
-          likes: 312,
-          visibility: "Public",
-        },
-        {
-          _id: "4",
-          imageUrl:
-            "https://images.unsplash.com/photo-1582561833449-3a9dd1a4a5ec?w=500&h=500&fit=crop",
-          title: "Digital Harmony",
-          artistName: "James Wilson",
-          category: "Digital Art",
-          likes: 428,
-          visibility: "Public",
-        },
-        {
-          _id: "5",
-          imageUrl:
-            "https://images.unsplash.com/photo-1561214115-f2f134cc4912?w=500&h=500&fit=crop",
-          title: "Nature's Canvas",
-          artistName: "Lisa Anderson",
-          category: "Nature",
-          likes: 276,
-          visibility: "Public",
-        },
-        {
-          _id: "6",
-          imageUrl:
-            "https://images.unsplash.com/photo-1549887534-1541e9326642?w=500&h=500&fit=crop",
-          title: "Portrait of Light",
-          artistName: "David Martinez",
-          category: "Portrait",
-          likes: 198,
-          visibility: "Public",
-        },
-        {
-          _id: "7",
-          imageUrl:
-            "https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=500&h=500&fit=crop",
-          title: "Cosmic Journey",
-          artistName: "Sophie Turner",
-          category: "Abstract",
-          likes: 356,
-          visibility: "Public",
-        },
-        {
-          _id: "8",
-          imageUrl:
-            "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&h=500&fit=crop",
-          title: "Ocean Waves",
-          artistName: "Ryan Cooper",
-          category: "Landscape",
-          likes: 421,
-          visibility: "Public",
-        },
-        {
-          _id: "9",
-          imageUrl:
-            "https://images.unsplash.com/photo-1533158326339-7f3cf2404354?w=500&h=500&fit=crop",
-          title: "City Lights",
-          artistName: "Alex Morgan",
-          category: "Street Art",
-          likes: 287,
-          visibility: "Public",
-        },
-      ];
-      setArtworks(mockArtworks);
-      setFilteredArtworks(mockArtworks);
-      setLoading(false);
-    }, 1000);
-  }, []);
+    axiosInstance.get("/artwork").then((response) => {
+      console.log("create a user from google:", response.data);
+      setArtworks(response.data);
+      setFilteredArtworks(response.data);
+    });
+  }, [user]);
 
-  // Filter artworks based on search and category
   useEffect(() => {
     let filtered = artworks;
 
@@ -234,7 +145,7 @@ const ExploreArtworks = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
               >
-                <ArtworkCard artwork={artwork} />
+                <ArtworkCard artwork={artwork} id={artwork._id} />
               </motion.div>
             ))}
           </motion.div>

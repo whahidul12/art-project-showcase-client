@@ -1,13 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router";
 import { Typewriter } from "react-simple-typewriter";
 import ArtworkCard from "../../Components/ArtworkCard/ArtworkCard";
+import useAxios from "../../Hooks/useAxios";
+import { AuthContext } from "../../Context/AuthProvider";
 
 const Home = () => {
+  const { user, loading } = useContext(AuthContext);
+  const axiosInstance = useAxios();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [featuredArtworks, setFeaturedArtworks] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   // Banner slides data
   const slides = [
@@ -45,67 +48,11 @@ const Home = () => {
 
   // Fetch featured artworks
   useEffect(() => {
-    setTimeout(() => {
-      const mockArtworks = [
-        {
-          _id: "1",
-          imageUrl:
-            "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=500&h=500&fit=crop",
-          title: "Abstract Dreams",
-          artistName: "Sarah Johnson",
-          category: "Abstract",
-          likes: 245,
-        },
-        {
-          _id: "2",
-          imageUrl:
-            "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=500&h=500&fit=crop",
-          title: "Mountain Serenity",
-          artistName: "Michael Chen",
-          category: "Landscape",
-          likes: 189,
-        },
-        {
-          _id: "3",
-          imageUrl:
-            "https://images.unsplash.com/photo-1561214115-f2f134cc4912?w=500&h=500&fit=crop",
-          title: "Urban Poetry",
-          artistName: "Emma Davis",
-          category: "Street Art",
-          likes: 312,
-        },
-        {
-          _id: "4",
-          imageUrl:
-            "https://images.unsplash.com/photo-1582561833449-3a9dd1a4a5ec?w=500&h=500&fit=crop",
-          title: "Digital Harmony",
-          artistName: "James Wilson",
-          category: "Digital Art",
-          likes: 428,
-        },
-        {
-          _id: "5",
-          imageUrl:
-            "https://images.unsplash.com/photo-1561214115-f2f134cc4912?w=500&h=500&fit=crop",
-          title: "Nature's Canvas",
-          artistName: "Lisa Anderson",
-          category: "Nature",
-          likes: 276,
-        },
-        {
-          _id: "6",
-          imageUrl:
-            "https://images.unsplash.com/photo-1549887534-1541e9326642?w=500&h=500&fit=crop",
-          title: "Portrait of Light",
-          artistName: "David Martinez",
-          category: "Portrait",
-          likes: 198,
-        },
-      ];
-      setFeaturedArtworks(mockArtworks);
-      setLoading(false);
-    }, 1000);
-  }, []);
+    axiosInstance.get("/artwork").then((response) => {
+      console.log("create a user from google:", response.data);
+      setFeaturedArtworks(response.data);
+    });
+  }, [user]);
 
   return (
     <div className="bg-primary-light dark:bg-primary-dark">
@@ -146,7 +93,7 @@ const Home = () => {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.6 }}
                   >
-                    <Link to="/explore">
+                    <Link to="/explore-artworks">
                       <button className="btn btn-primary btn-lg">
                         Explore Gallery
                       </button>
@@ -206,7 +153,11 @@ const Home = () => {
         ) : (
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {featuredArtworks.map((artwork) => (
-              <ArtworkCard key={artwork._id} artwork={artwork} />
+              <ArtworkCard
+                key={artwork._id}
+                artwork={artwork}
+                id={artwork._id}
+              />
             ))}
           </div>
         )}
@@ -217,7 +168,7 @@ const Home = () => {
           viewport={{ once: true }}
           className="mt-12 text-center"
         >
-          <Link to="/explore">
+          <Link to="/explore-artworks">
             <button className="btn btn-primary btn-wide">
               View All Artworks
             </button>
@@ -281,6 +232,48 @@ const Home = () => {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+      {/* Community Highlights */}
+      <section className="container mx-auto px-4 py-20">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-12 text-center"
+        >
+          <h2 className="mb-4 text-4xl font-bold md:text-5xl">
+            Community Highlights
+          </h2>
+          <p className="text-base-content/70 text-xl">
+            Join our vibrant community of artists and art enthusiasts
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {[
+            { icon: "🎨", count: "10,000+", label: "Artworks" },
+            { icon: "👥", count: "5,000+", label: "Artists" },
+            { icon: "❤️", count: "100K+", label: "Likes" },
+            { icon: "🌟", count: "4.8/5", label: "Rating" },
+          ].map((stat, index) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="card from-primary/10 to-secondary/10 bg-gradient-to-br shadow-xl"
+            >
+              <div className="card-body items-center text-center">
+                <div className="mb-4 text-5xl">{stat.icon}</div>
+                <h3 className="text-primary text-3xl font-bold">
+                  {stat.count}
+                </h3>
+                <p className="text-lg">{stat.label}</p>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </section>
     </div>

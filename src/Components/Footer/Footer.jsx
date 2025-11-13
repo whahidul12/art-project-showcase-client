@@ -80,7 +80,7 @@ const Footer = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <p className="gradient-text text-xl font-bold">Artify</p>
+        <p className="gradient-text text-xl font-bold">ArtFolio</p>
         <p className="text-sm">Where Creativity Meets Community</p>
       </motion.div>
 
@@ -90,9 +90,11 @@ const Footer = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.4 }}
       >
-        <p className="text-sm">© {currentYear} Artify. All rights reserved.</p>
+        <p className="text-sm">
+          © {currentYear} ArtFolio. All rights reserved.
+        </p>
         <p className="mt-2 text-xs">
-          Contact: info@artify.com | +1 (555) 123-4567
+          Contact: info@artfolio.com | +880 183 943 9896
         </p>
       </motion.div>
     </footer>

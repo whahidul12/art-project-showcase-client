@@ -5,13 +5,21 @@ import ArtworkCard from "../../Components/ArtworkCard/ArtworkCard";
 // import toast from 'react-hot-toast';
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Context/AuthProvider";
+import useAxios from "../../Hooks/useAxios";
 
 const MyGallery = () => {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
+  const axiosInstance = useAxios();
   const [artworks, setArtworks] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedArtwork, setSelectedArtwork] = useState(null);
+
+  useEffect(() => {
+    axiosInstance.get(`/artwork/user/${user?.email}`).then((response) => {
+      console.log("create a user from google:", response.data);
+      setArtworks(response.data);
+    });
+  }, [user]);
 
   const categories = [
     "Abstract",
@@ -24,49 +32,6 @@ const MyGallery = () => {
     "Sculpture",
     "Mixed Media",
   ];
-
-  useEffect(() => {
-    fetchMyArtworks();
-  }, []);
-
-  const fetchMyArtworks = async () => {
-    // This will be replaced with actual API call
-    // Fetch artworks for current user
-    setTimeout(() => {
-      const mockArtworks = [
-        {
-          _id: "1",
-          imageUrl:
-            "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=500&h=500&fit=crop",
-          title: "My Abstract Dreams",
-          artistName: user.displayName,
-          category: "Abstract",
-          likes: 245,
-          visibility: "Public",
-          medium: "Acrylic on canvas",
-          description: "A personal exploration of abstract forms",
-          dimensions: "24x36 inches",
-          price: "599.99",
-        },
-        {
-          _id: "2",
-          imageUrl:
-            "https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=500&h=500&fit=crop",
-          title: "Mountain Peace",
-          artistName: user.displayName,
-          category: "Landscape",
-          likes: 189,
-          visibility: "Private",
-          medium: "Oil on canvas",
-          description: "A serene mountain landscape",
-          dimensions: "30x40 inches",
-          price: "799.99",
-        },
-      ];
-      setArtworks(mockArtworks);
-      setLoading(false);
-    }, 1000);
-  };
 
   const handleDelete = async (artworkId) => {
     const result = await Swal.fire({
@@ -81,18 +46,14 @@ const MyGallery = () => {
 
     if (result.isConfirmed) {
       try {
-        // This will be replaced with actual API call
-        console.log("Deleting artwork:", artworkId);
+        await axiosInstance.delete(`/artwork/${artworkId}`);
 
-        // Simulate API call
-        await new Promise((resolve) => setTimeout(resolve, 500));
-
-        setArtworks(artworks.filter((artwork) => artwork._id !== artworkId));
+        setArtworks(artworks.filter((art) => art._id !== artworkId));
 
         Swal.fire("Deleted!", "Your artwork has been deleted.", "success");
       } catch (error) {
         console.error(error);
-        // toast.error('Failed to delete artwork');
+        Swal.fire("Error!", "Failed to delete artwork.", "error");
       }
     }
   };
@@ -106,11 +67,10 @@ const MyGallery = () => {
     e.preventDefault();
 
     try {
-      // This will be replaced with actual API call
-      console.log("Updating artwork:", selectedArtwork);
-
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await axiosInstance.put(
+        `/artwork/${selectedArtwork._id}`,
+        selectedArtwork,
+      );
 
       setArtworks(
         artworks.map((artwork) =>
@@ -119,10 +79,10 @@ const MyGallery = () => {
       );
 
       setShowUpdateModal(false);
-      // toast.success('Artwork updated successfully!');
+      Swal.fire("Updated!", "Artwork updated successfully.", "success");
     } catch (error) {
       console.error(error);
-      // toast.error('Failed to update artwork');
+      Swal.fire("Error!", "Failed to update artwork.", "error");
     }
   };
 
@@ -245,6 +205,7 @@ const MyGallery = () => {
                   }
                   required
                 >
+                  <option value="">Select a category</option>
                   {categories.map((category) => (
                     <option key={category} value={category}>
                       {category}

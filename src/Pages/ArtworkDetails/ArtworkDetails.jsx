@@ -2,44 +2,27 @@ import { useState, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router";
 import { motion } from "motion/react";
 import { AuthContext } from "../../Context/AuthProvider";
+import useAxios from "../../Hooks/useAxios";
 // import { useAuth } from "../contexts/AuthContext";
 // import toast from "react-hot-toast";
 
 const ArtworkDetails = () => {
   const { id } = useParams();
+  const axiosInstance = useAxios();
+  const { loading } = useContext(AuthContext);
   //   const { currentUser } = useAuth();
   const { user } = useContext(AuthContext);
   const [artwork, setArtwork] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [isLiked, setIsLiked] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
 
   useEffect(() => {
     // Fetch artwork details
     // This will be replaced with actual API call
-    setTimeout(() => {
-      const mockArtwork = {
-        _id: id,
-        imageUrl:
-          "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&h=800&fit=crop",
-        title: "Abstract Dreams",
-        artistName: "Sarah Johnson",
-        artistEmail: "sarah@example.com",
-        artistPhoto: "https://i.pravatar.cc/150?img=1",
-        category: "Abstract",
-        medium: "Acrylic on canvas",
-        description:
-          "A mesmerizing abstract piece that explores the boundaries between reality and imagination. The vibrant colors and dynamic composition evoke a sense of wonder and introspection.",
-        dimensions: "24 x 36 inches",
-        price: "599.99",
-        visibility: "Public",
-        likes: 245,
-        createdAt: "2024-01-15T10:30:00Z",
-        totalArtworks: 45,
-      };
-      setArtwork(mockArtwork);
-      setLoading(false);
-    }, 1000);
+    axiosInstance.get(`/artwork/${id}`).then((response) => {
+      console.log("create a user from google:", response.data);
+      setArtwork(response.data);
+    });
   }, [id]);
 
   const handleLike = async () => {
